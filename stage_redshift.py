@@ -1,3 +1,4 @@
+from airflow.contrib.hooks.aws_hook import AwsHook
 from airflow.hooks.postgres_hook import PostgresHook
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
@@ -47,7 +48,7 @@ class StageToRedshiftOperator(BaseOperator):
         aws_hook = AwsHook(self.aws_credentials_id)
         credentials = aws_hook.get_credentials()
         #redshift_hook = ProstgresHook(postgres_conn_id=self."redshift")
-        redshift_hook = ProstgresHook(postgres_conn_id=self.redshift_conn_id)
+        redshift_hook = PostgresHook(self.redshift_conn_id)
         tgt_table =self.target_table
         cpy_format = self.copy_format
         rendered_key = self.s3_key
